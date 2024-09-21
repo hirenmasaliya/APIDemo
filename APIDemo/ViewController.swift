@@ -12,6 +12,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        callJokes()
+    }
+    
+    func callJokes(){
+        callJokeAPI { res in
+            switch res {
+            case .success(let data):
+                debugPrint(data)
+            case .failure(let error):
+                debugPrint(error)
+            }
+        }
     }
 
 
