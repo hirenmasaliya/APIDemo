@@ -16,6 +16,8 @@ class ViewController: UIViewController {
         callJokes()
     }
     
+    // Here Call Jokes Api
+    
     func callJokes(){
         callJokeAPI { res in
             switch res {
