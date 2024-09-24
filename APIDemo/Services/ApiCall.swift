@@ -21,6 +21,7 @@ func callJokeAPI(completionHandler: @escaping(Result<[JokeModel], Error>) -> Voi
             case .failure(let error):
     //            debugPrint("something went wrong: \(error)")
                 completionHandler(.failure(error))
+            
         }
     }
 }
