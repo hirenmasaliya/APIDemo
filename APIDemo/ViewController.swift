@@ -10,24 +10,34 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    var loader: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
     
     var jokes : [JokeModel] = []
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         callJokes()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         setupTableView()
+        setupLoader()
     }
     
-    // Here Call Jokes Api
+    func setupLoader() {
+            loader.center = view.center
+            loader.hidesWhenStopped = true // This will automatically hide the loader when you stop it
+            view.addSubview(loader)
+        }
     
+    // Here Call Jokes Api
     func callJokes(){
+        loader.startAnimating()
         callJokeAPI { res in
+            self.loader.stopAnimating()
+            
             switch res {
             case .success(let data):
                 self.jokes.append(contentsOf: data)
@@ -61,14 +71,30 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 70
     }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let messageAction = UIContextualAction(style: .normal, title: "Message") { (action, view, completionHandler) in
+            print("Left Swipe")
+            completionHandler(true)
+        }
+        
+        messageAction.backgroundColor = .systemBlue
+        
+        let configuration = UISwipeActionsConfiguration(actions: [messageAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        
+        return configuration
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
         jokes.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
         tableView.endUpdates()
     }
+    
     
 }
 
