@@ -14,13 +14,13 @@ func callJokeAPI(completionHandler: @escaping(Result<[JokeModel], Error>) -> Voi
         
         switch response.result {
             
-        case .success(let data):
-//            debugPrint("data fetched : \(data)")
-            completionHandler(.success(data))
-            
-        case .failure(let error):
-//            debugPrint("something went wrong: \(error)")
-            completionHandler(.failure(error))
+            case .success(let data):
+    //            debugPrint("data fetched : \(data)")
+                completionHandler(.success(data))
+                
+            case .failure(let error):
+    //            debugPrint("something went wrong: \(error)")
+                completionHandler(.failure(error))
         }
     }
 }
