@@ -9,10 +9,6 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 
-
-    @IBOutlet weak var txtPunchLine: UILabel!
-    @IBOutlet weak var txtSetup: UILabel!
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
